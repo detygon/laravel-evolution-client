@@ -11,7 +11,7 @@ class WhatsAppNotificationService
     /**
      * Send a quick text message to a phone number.
      */
-    public function sendText(string $phoneNumber, string $message, ?string $instance = null): void
+    public static function sendText(string $phoneNumber, string $message, ?string $instance = null): void
     {
         $notification = new class($message, $instance) extends \Illuminate\Notifications\Notification {
             protected $message;
@@ -56,7 +56,7 @@ class WhatsAppNotificationService
     /**
      * Send a bulk message to multiple phone numbers.
      */
-    public function sendBulkText(array $phoneNumbers, string $message, ?string $instance = null): void
+    public static function sendBulkText(array $phoneNumbers, string $message, ?string $instance = null): void
     {
         $notifiables = collect($phoneNumbers)->map(function ($number) {
             return new class($number) {
@@ -102,7 +102,7 @@ class WhatsAppNotificationService
     /**
      * Send an image to a phone number.
      */
-    public function sendImage(string $phoneNumber, string $imageUrl, ?string $caption = null, ?string $instance = null): void
+    public static function sendImage(string $phoneNumber, string $imageUrl, ?string $caption = null, ?string $instance = null): void
     {
         $notification = new class($imageUrl, $caption, $instance) extends \Illuminate\Notifications\Notification {
             protected $imageUrl;
@@ -148,7 +148,7 @@ class WhatsAppNotificationService
     /**
      * Send a location to a phone number.
      */
-    public function sendLocation(
+    public static function sendLocation(
         string $phoneNumber,
         float $latitude,
         float $longitude,
