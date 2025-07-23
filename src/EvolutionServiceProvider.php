@@ -3,7 +3,9 @@
 
 namespace SamuelTerra22\LaravelEvolutionClient;
 
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\ServiceProvider;
+use SamuelTerra22\LaravelEvolutionClient\Notifications\Channels\EvolutionWhatsAppChannel;
 use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
 
 class EvolutionServiceProvider extends ServiceProvider
@@ -45,6 +47,10 @@ class EvolutionServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/evolution.php' => config_path('evolution.php'),
         ], 'evolution-config');
+
+        $this->app->make(ChannelManager::class)->extend('evolution-whatsapp', function () {
+            return new EvolutionWhatsAppChannel();
+        });
 
         // Register commands if we're in console
         if ($this->app->runningInConsole()) {
